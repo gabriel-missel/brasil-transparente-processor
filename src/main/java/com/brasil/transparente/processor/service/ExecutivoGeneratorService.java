@@ -47,7 +47,7 @@ public class ExecutivoGeneratorService {
             String yearString = String.valueOf(year);
             String monthString = String.format("%02d", month);
             String documentNumber = yearString + monthString;
-            String filePath = "C:\\Users\\Gabriel\\Documents\\brasil-transparente\\brasil-transparente-resources\\Executivo\\despesas" + year + "\\" + documentNumber + ".csv";
+            String filePath = "PATH\\brasil-transparente-resources\\Executivo\\despesas" + year + "\\" + documentNumber + ".csv";
             String delimiter = ";";
             createExpensesStructure(filePath, delimiter, year, month);
             month++;
@@ -119,7 +119,7 @@ public class ExecutivoGeneratorService {
     }
 
     private void peekOnStfAndComplementStructure() {
-        String filePath = "C:\\Users\\Gabriel\\Documents\\brasil-transparente\\brasil-transparente-resources\\Judiciario\\Supremo Tribunal Federal\\STF.csv";
+        String filePath = "PATH\\brasil-transparente-resources\\Judiciario\\Supremo Tribunal Federal\\STF.csv";
         String delimiter = ",";
         log.info("STF - Lendo arquivos de despesas e criando estrutura de despesa.");
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
@@ -165,7 +165,7 @@ public class ExecutivoGeneratorService {
             String yearString = String.valueOf(year);
             String monthString = String.format("%02d", month);
             String documentNumber = yearString + monthString;
-            String filePath = "C:\\Users\\Gabriel\\Documents\\brasil-transparente\\brasil-transparente-resources\\Judiciario\\Justiça Federal\\" + documentNumber + ".csv";
+            String filePath = "PATH\\brasil-transparente-resources\\Judiciario\\Justiça Federal\\" + documentNumber + ".csv";
             String delimiter = "\t";
             log.info("Justiça Federal - Lendo arquivos de despesas e criando estrutura de despesa. Mês = {}", month);
             try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
