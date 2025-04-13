@@ -38,13 +38,13 @@ public class LegislativoGeneratorService {
     }
 
     private void generateCamaraDeputados() {
-        String filePath = "C:\\Users\\Gabriel\\Documents\\brasil-transparente\\brasil-transparente-resources\\Legislativo\\CamaraDeputados.csv";
+        String filePath = "PATH\\brasil-transparente-resources\\Legislativo\\CamaraDeputados.csv";
         String delimiter = "\t";
         createCamaraDeputadosStructure(filePath, delimiter);
     }
 
     private void generateSenado() {
-        String filePath = "C:\\Users\\Gabriel\\Documents\\brasil-transparente\\brasil-transparente-resources\\Legislativo\\Senado.csv";
+        String filePath = "PATH\\brasil-transparente-resources\\Legislativo\\Senado.csv";
         String delimiter = "\t";
         createSenadoFederalStructure(filePath, delimiter);
     }

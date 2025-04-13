@@ -54,7 +54,7 @@ public class OrgaosAutonomosGeneratorService {
             String yearString = String.valueOf(year);
             String monthString = String.format("%02d", month);
             String documentNumber = yearString + monthString;
-            String filePath = "C:\\Users\\Gabriel\\Documents\\brasil-transparente\\brasil-transparente-resources\\Orgaos Autonomos\\Tribunal de Contas da Uniao\\" + documentNumber + ".csv";
+            String filePath = "PATH\\brasil-transparente-resources\\Orgaos Autonomos\\Tribunal de Contas da Uniao\\" + documentNumber + ".csv";
             String delimiter = ";";
             createTribunalContasUniaoStructure(filePath, delimiter, month);
             month++;
@@ -62,13 +62,13 @@ public class OrgaosAutonomosGeneratorService {
     }
 
     private void generateDefensoriaPublicaUniao() {
-        String filePath = "C:\\Users\\Gabriel\\Documents\\brasil-transparente\\brasil-transparente-resources\\Orgaos Autonomos\\Defensoria Publica da Uniao\\2024.csv";
+        String filePath = "PATH\\brasil-transparente-resources\\Orgaos Autonomos\\Defensoria Publica da Uniao\\2024.csv";
         String delimiter = ";";
         createDefensoriaPublicaUniaoStructure(filePath, delimiter);
     }
 
     private void generateMinisterioPublico(String nameOrgao) {
-        String filePath = "C:\\Users\\Gabriel\\Documents\\brasil-transparente\\brasil-transparente-resources\\Orgaos Autonomos\\Ministerio Publico\\" + nameOrgao + "\\2024.csv";
+        String filePath = "PATH\\brasil-transparente-resources\\Orgaos Autonomos\\Ministerio Publico\\" + nameOrgao + "\\2024.csv";
         String delimiter = ";";
         createMinisterioPublicoUniaoStructure(filePath, delimiter, nameOrgao);
     }

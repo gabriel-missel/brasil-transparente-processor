@@ -51,7 +51,7 @@ public class JudiciarioGeneratorService {
     }
 
     private void generateSuperiorTribunalFederal() {
-        String filePath = "C:\\Users\\Gabriel\\Documents\\brasil-transparente\\brasil-transparente-resources\\Judiciario\\Supremo Tribunal Federal\\STF.csv";
+        String filePath = "PATH\\brasil-transparente-resources\\Judiciario\\Supremo Tribunal Federal\\STF.csv";
         String delimiter = ",";
         createExpenseStructureStf(filePath, delimiter);
     }
@@ -62,7 +62,7 @@ public class JudiciarioGeneratorService {
             String yearString = String.valueOf(year);
             String monthString = String.format("%02d", month);
             String documentNumber = yearString + monthString;
-            String filePath = "C:\\Users\\Gabriel\\Documents\\brasil-transparente\\brasil-transparente-resources\\Judiciario\\" + tribunal + "\\" + documentNumber + ".csv";
+            String filePath = "PATH\\brasil-transparente-resources\\Judiciario\\" + tribunal + "\\" + documentNumber + ".csv";
             String delimiter = "\t";
             createStandardJusticeExpenseStrucutre(filePath, delimiter, month, tribunal);
             month++;
