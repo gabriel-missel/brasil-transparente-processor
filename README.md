@@ -14,7 +14,7 @@ Módulo responsável por ler arquivos de gastos de todas as partes da União pre
    ```bash
    git clone https://github.com/gabriel-missel/brasil-transparente-processor.git
    ```
-2. Crie a estrutura do banco no MySQL utilizando a query no arquivo table_setup.sql, localizado no Drve (link abaixo).
+2. Caso você possua docker instalado rode o comando `docker compose up -d`, caso contrário só rodar a aplicação normalmente que as migrations serão rodadas no boot da app.
 3. Copie os arquivos de gastos da União do Drive (link abaixo) para a pasta do projeto.
 4. Certifique-se de que os paths no projeto estão apontando para o local correto dos arquivos.
 5. Suba a aplicação utilizando o SpringBoot, rodando a classe BrasilTransparenteProcessorApplication.
