@@ -4,6 +4,7 @@ import com.brasil.transparente.processor.entity.*;
 import com.brasil.transparente.processor.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -11,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +23,9 @@ public class LegislativoGeneratorService {
 
     @Autowired
     private GeneralGeneratorService generalGeneratorService;
+
+    @Value("${CSV_PATH}")
+    private String csvPath;
 
     private static final String LEGISLATIVO = "Poder Legislativo";
     Poder poder = new Poder(LEGISLATIVO);
@@ -38,13 +43,15 @@ public class LegislativoGeneratorService {
     }
 
     private void generateCamaraDeputados() {
-        String filePath = "PATH\\brasil-transparente-resources\\Legislativo\\CamaraDeputados.csv";
+        String relativePath = "Legislativo/CamaraDeputados.csv";
+        String filePath = Paths.get(csvPath, relativePath).toString();
         String delimiter = "\t";
         createCamaraDeputadosStructure(filePath, delimiter);
     }
 
     private void generateSenado() {
-        String filePath = "PATH\\brasil-transparente-resources\\Legislativo\\Senado.csv";
+        String relativePath = "Legislativo/Senado.csv";
+        String filePath = Paths.get(csvPath, relativePath).toString();
         String delimiter = "\t";
         createSenadoFederalStructure(filePath, delimiter);
     }

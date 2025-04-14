@@ -7,10 +7,12 @@ import com.brasil.transparente.processor.util.EmbaixadasConstants;
 import com.brasil.transparente.processor.util.NameCorrector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +25,9 @@ public class ExecutivoGeneratorService {
     private GeneralGeneratorService generalGeneratorService;
     @Autowired
     private NameCorrector nameCorrector;
+
+    @Value("${CSV_PATH}")
+    private String csvPath;
 
     private static final String EXECUTIVO = "Poder Executivo";
     private static final String PRECATORIOS_RPVS = "Precatórios e Requisições de Pequeno Valor";
@@ -47,7 +52,8 @@ public class ExecutivoGeneratorService {
             String yearString = String.valueOf(year);
             String monthString = String.format("%02d", month);
             String documentNumber = yearString + monthString;
-            String filePath = "PATH\\brasil-transparente-resources\\Executivo\\despesas" + year + "\\" + documentNumber + ".csv";
+            String relativePath = "/Executivo/despesas" + year + "/" + documentNumber + ".csv";
+            String filePath = Paths.get(csvPath, relativePath).toString();
             String delimiter = ";";
             createExpensesStructure(filePath, delimiter, year, month);
             month++;
@@ -119,7 +125,8 @@ public class ExecutivoGeneratorService {
     }
 
     private void peekOnStfAndComplementStructure() {
-        String filePath = "PATH\\brasil-transparente-resources\\Judiciario\\Supremo Tribunal Federal\\STF.csv";
+        String relativePath = "/Judiciario/Supremo Tribunal Federal/STF.csv";
+        String filePath = Paths.get(csvPath, relativePath).toString();
         String delimiter = ",";
         log.info("STF - Lendo arquivos de despesas e criando estrutura de despesa.");
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
@@ -165,7 +172,8 @@ public class ExecutivoGeneratorService {
             String yearString = String.valueOf(year);
             String monthString = String.format("%02d", month);
             String documentNumber = yearString + monthString;
-            String filePath = "PATH\\brasil-transparente-resources\\Judiciario\\Justiça Federal\\" + documentNumber + ".csv";
+            String relativePath = "\\Judiciario\\Justiça Federal\\";
+            String filePath = csvPath + relativePath + documentNumber + ".csv";
             String delimiter = "\t";
             log.info("Justiça Federal - Lendo arquivos de despesas e criando estrutura de despesa. Mês = {}", month);
             try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
@@ -237,7 +245,7 @@ public class ExecutivoGeneratorService {
         } else if (unidadeGestora.contains("- MOEDA LOCAL")) {
             return switch (unidadeGestora) {
                 case EmbaixadasConstants.EMBAIXADA_CHINA_PEQUIM_LOCAL, EmbaixadasConstants.EMBAIXADA_CHINA_CANTAO_LOCAL,
-                     EmbaixadasConstants.EMBAIXADA_CHINA_XANGAI_LOCAL -> valorPago * Currency2024Constants.YUAN;
+                        EmbaixadasConstants.EMBAIXADA_CHINA_XANGAI_LOCAL -> valorPago * Currency2024Constants.YUAN;
                 case EmbaixadasConstants.EMBAIXADA_BOLIVIA_LOCAL -> valorPago * Currency2024Constants.BOLIVIANO;
                 case EmbaixadasConstants.EMBAIXADA_TAILANDIA_LOCAL -> valorPago * Currency2024Constants.BAHT;
                 case EmbaixadasConstants.EMBAIXADA_POLONIA_LOCAL -> valorPago * Currency2024Constants.ZLOTY;

@@ -4,12 +4,14 @@ import com.brasil.transparente.processor.entity.*;
 import com.brasil.transparente.processor.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +22,9 @@ public class JudiciarioGeneratorService {
 
     @Autowired
     private GeneralGeneratorService generalGeneratorService;
+
+    @Value("${CSV_PATH}")
+    private String csvPath;
 
     private static final String JUDICIARIO = "Poder Judiciário";
     Poder poder = new Poder(JUDICIARIO);
@@ -51,7 +56,8 @@ public class JudiciarioGeneratorService {
     }
 
     private void generateSuperiorTribunalFederal() {
-        String filePath = "PATH\\brasil-transparente-resources\\Judiciario\\Supremo Tribunal Federal\\STF.csv";
+        String relativePath = "/Judiciario/Supremo Tribunal Federal/STF.csv";
+        String filePath = Paths.get(csvPath, relativePath).toString();
         String delimiter = ",";
         createExpenseStructureStf(filePath, delimiter);
     }
@@ -62,7 +68,8 @@ public class JudiciarioGeneratorService {
             String yearString = String.valueOf(year);
             String monthString = String.format("%02d", month);
             String documentNumber = yearString + monthString;
-            String filePath = "PATH\\brasil-transparente-resources\\Judiciario\\" + tribunal + "\\" + documentNumber + ".csv";
+            String relativePath = "/Judiciario/" + tribunal + "/" + documentNumber + ".csv";
+            String filePath = Paths.get(csvPath, relativePath).toString();
             String delimiter = "\t";
             createStandardJusticeExpenseStrucutre(filePath, delimiter, month, tribunal);
             month++;
