@@ -4,6 +4,7 @@ import com.brasil.transparente.processor.entity.*;
 import com.brasil.transparente.processor.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -11,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +23,9 @@ public class OrgaosAutonomosGeneratorService {
 
     @Autowired
     private GeneralGeneratorService generalGeneratorService;
+
+    @Value("${CSV_PATH}")
+    private String csvPath;
 
     private static final String ORGAOS_AUTONOMOS = "Órgãos Autônomos";
     Poder poder = new Poder(ORGAOS_AUTONOMOS);
@@ -51,10 +56,11 @@ public class OrgaosAutonomosGeneratorService {
     private void generateTribunalContasUniao(String year) {
         int month = 1;
         while (month <= 12) {
-            String yearString = String.valueOf(year);
             String monthString = String.format("%02d", month);
-            String documentNumber = yearString + monthString;
-            String filePath = "PATH\\brasil-transparente-resources\\Orgaos Autonomos\\Tribunal de Contas da Uniao\\" + documentNumber + ".csv";
+            String documentNumber = year + monthString;
+            String relativePath = "/Orgaos Autonomos/Tribunal de Contas da Uniao/";
+            String fileName = documentNumber + ".csv";
+            String filePath = Paths.get(csvPath, relativePath, fileName).toString();
             String delimiter = ";";
             createTribunalContasUniaoStructure(filePath, delimiter, month);
             month++;
@@ -62,13 +68,15 @@ public class OrgaosAutonomosGeneratorService {
     }
 
     private void generateDefensoriaPublicaUniao() {
-        String filePath = "PATH\\brasil-transparente-resources\\Orgaos Autonomos\\Defensoria Publica da Uniao\\2024.csv";
+        String relativePath = "/Orgaos Autonomos/Defensoria Publica da Uniao/2024.csv";
+        String filePath = Paths.get(csvPath, relativePath).toString();
         String delimiter = ";";
         createDefensoriaPublicaUniaoStructure(filePath, delimiter);
     }
 
     private void generateMinisterioPublico(String nameOrgao) {
-        String filePath = "PATH\\brasil-transparente-resources\\Orgaos Autonomos\\Ministerio Publico\\" + nameOrgao + "\\2024.csv";
+        String relativePath = "/Orgaos Autonomos/Ministerio Publico/" + nameOrgao + "/2024.csv";
+        String filePath = Paths.get(csvPath, relativePath).toString();
         String delimiter = ";";
         createMinisterioPublicoUniaoStructure(filePath, delimiter, nameOrgao);
     }
