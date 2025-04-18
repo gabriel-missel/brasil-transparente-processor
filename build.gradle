@@ -44,7 +44,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:2.0.16'
 
     // MySQL Connector
-    implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.2'
+    implementation 'com.mysql:mysql-connector-j:9.2.0'
 
     // Lombok
     implementation 'org.projectlombok:lombok'
