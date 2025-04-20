@@ -12,7 +12,7 @@ Módulo responsável por ler arquivos de gastos de todas as partes da União pre
 ### Passos
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/gabriel-missel/brasil-transparente-processor.git
+   git clone https://github.com/brasil-transparente/brasil-transparente-processor.git
    ```
 2. Crie a estrutura do banco no MySQL utilizando a query no arquivo table_setup.sql, localizado no Drive (link abaixo).
 3. Copie os arquivos de gastos da União do Drive (link abaixo) para a pasta do projeto.
