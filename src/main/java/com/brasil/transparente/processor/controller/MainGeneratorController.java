@@ -1,6 +1,6 @@
 package com.brasil.transparente.processor.controller;
 
-import com.brasil.transparente.processor.service.MainGeneratorService;
+import com.brasil.transparente.processor.service.generator.MainGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

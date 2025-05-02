@@ -1,9 +1,8 @@
-package com.brasil.transparente.processor.service;
+package com.brasil.transparente.processor.service.generator;
 
 import com.brasil.transparente.processor.entity.DespesaSimplicada;
 import com.brasil.transparente.processor.entity.ElementoDespesa;
 import com.brasil.transparente.processor.repository.*;
-import com.brasil.transparente.processor.util.Constants;
 import com.brasil.transparente.processor.util.SimplifiedConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +14,23 @@ import java.util.List;
 @Service
 public class SimplifiedGeneratorService {
 
-    @Autowired
-    private MinisterioRepository ministerioRepository;
-    @Autowired
-    private OrgaoRepository orgaoRepository;
-    @Autowired
-    private UnidadeGestoraRepository unidadeGestoraRepository;
-    @Autowired
-    private ElementoDespesaRepository elementoDespesaRepository;
-    @Autowired
-    private GastoTotalRepository gastoTotalRepository;
-    @Autowired
-    private DespesaSimplificadaRepository despesaSimplificadaRepository;
+    private final MinisterioRepository ministerioRepository;
+    private final OrgaoRepository orgaoRepository;
+    private final UnidadeGestoraRepository unidadeGestoraRepository;
+    private final ElementoDespesaRepository elementoDespesaRepository;
+    private final GastoTotalRepository gastoTotalRepository;
+    private final DespesaSimplificadaRepository despesaSimplificadaRepository;
     private double allMoneySpent;
+
+    @Autowired
+    public SimplifiedGeneratorService(MinisterioRepository ministerioRepository, OrgaoRepository orgaoRepository, UnidadeGestoraRepository unidadeGestoraRepository, ElementoDespesaRepository elementoDespesaRepository, GastoTotalRepository gastoTotalRepository, DespesaSimplificadaRepository despesaSimplificadaRepository) {
+        this.ministerioRepository = ministerioRepository;
+        this.orgaoRepository = orgaoRepository;
+        this.unidadeGestoraRepository = unidadeGestoraRepository;
+        this.elementoDespesaRepository = elementoDespesaRepository;
+        this.gastoTotalRepository = gastoTotalRepository;
+        this.despesaSimplificadaRepository = despesaSimplificadaRepository;
+    }
 
     public void generateSimplifiedReport() {
         log.info("Gerando estrutura simplificada");

@@ -57,7 +57,7 @@ application {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'com.brasil.transparente.BrasilTransparenteProcessorApplication'
+        attributes 'Main-Class': 'com.brasil.transparente.processor.BrasilTransparenteProcessorApplication'
 jar
     }
     from {
@@ -68,4 +68,8 @@ jar
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+bootRun {
+    mainClass.set('com.brasil.transparente.processor.BrasilTransparenteProcessorApplication')
 }
