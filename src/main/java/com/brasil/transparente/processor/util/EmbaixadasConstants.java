@@ -65,4 +65,24 @@ public class EmbaixadasConstants {
     public static final String EMBAIXADA_GENEBRA_EURO = "DELEGACAO PERMANENTE EM GENEBRA - EURO";
     public static final String EMBAIXADA_GENEBRA = "DELEGACAO PERMANENTE EM GENEBRA";
 
+    public static String mergeEmbassyNames(String unidadeGestora) {
+        return switch (unidadeGestora) {
+            case EmbaixadasConstants.EMBAIXADA_CHINA_PEQUIM_USD, EmbaixadasConstants.EMBAIXADA_CHINA_PEQUIM_LOCAL -> EmbaixadasConstants.EMBAIXADA_CHINA_PEQUIM;
+            case EmbaixadasConstants.EMBAIXADA_CHINA_XANGAI_USD, EmbaixadasConstants.EMBAIXADA_CHINA_XANGAI_LOCAL -> EmbaixadasConstants.EMBAIXADA_CHINA_XANGAI;
+            case EmbaixadasConstants.EMBAIXADA_CHINA_CANTAO_USD, EmbaixadasConstants.EMBAIXADA_CHINA_CANTAO_LOCAL -> EmbaixadasConstants.EMBAIXADA_CHINA_CANTAO;
+            case EmbaixadasConstants.EMBAIXADA_BOLIVIA_USD, EmbaixadasConstants.EMBAIXADA_BOLIVIA_LOCAL -> EmbaixadasConstants.EMBAIXADA_BOLIVIA;
+            case EmbaixadasConstants.EMBAIXADA_TAILANDIA_USD, EmbaixadasConstants.EMBAIXADA_TAILANDIA_LOCAL -> EmbaixadasConstants.EMBAIXADA_TAILANDIA;
+            case EmbaixadasConstants.EMBAIXADA_POLONIA_USD, EmbaixadasConstants.EMBAIXADA_POLONIA_LOCAL -> EmbaixadasConstants.EMBAIXADA_POLONIA;
+            case EmbaixadasConstants.EMBAIXADA_NIGERIA_USD, EmbaixadasConstants.EMBAIXADA_NIGERIA_LOCAL -> EmbaixadasConstants.EMBAIXADA_NIGERIA;
+            case EmbaixadasConstants.EMBAIXADA_BEIRUTE_USD, EmbaixadasConstants.EMBAIXADA_BEIRUTE_LOCAL -> EmbaixadasConstants.EMBAIXADA_BEIRUTE;
+            case EmbaixadasConstants.EMBAIXADA_PASO_LOS_LIBRES_LOCAL, EmbaixadasConstants.EMBAIXADA_PASO_LOS_LIBRES_USD -> EmbaixadasConstants.EMBAIXADA_PASO_LOS_LIBRES;
+            case EmbaixadasConstants.EMBAIXADA_ASSUNCAO_USD -> EmbaixadasConstants.EMBAIXADA_ASSUNCAO;
+            case EmbaixadasConstants.EMBAIXADA_ISTAMBUL_USD -> EmbaixadasConstants.EMBAIXADA_ISTAMBUL;
+            case EmbaixadasConstants.EMBAIXADA_RAMALA_USD -> EmbaixadasConstants.EMBAIXADA_RAMALA;
+            case EmbaixadasConstants.EMBAIXADA_PASO_TEL_AVIV_USD -> EmbaixadasConstants.EMBAIXADA_PASO_TEL_AVIV;
+            case EmbaixadasConstants.EMBAIXADA_LA_PAZ_USD -> EmbaixadasConstants.EMBAIXADA_LA_PAZ;
+            case EmbaixadasConstants.EMBAIXADA_GENEBRA_EURO -> EmbaixadasConstants.EMBAIXADA_GENEBRA;
+            default -> unidadeGestora;
+        };
+    }
 }
