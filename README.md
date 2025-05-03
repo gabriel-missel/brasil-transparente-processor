@@ -14,7 +14,7 @@ Módulo responsável por ler arquivos de gastos de todas as partes da União pre
    ```bash
    git clone https://github.com/brasil-transparente/brasil-transparente-processor.git
    ```
-2. Crie a estrutura do banco no MySQL utilizando a query no arquivo table_setup.sql, localizado no Drive (link abaixo).
+2. Crie a estrutura do banco no MySQL utilizando a query `create database gastos;`.
 3. Copie os arquivos de gastos da União do Drive (link abaixo) para a pasta do projeto.
 4. Certifique-se de que os paths no projeto estão apontando para o local correto dos arquivos.
 5. Certifique-se de que os dados do banco de dados local estão corretos no application.properties.
