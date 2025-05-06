@@ -41,7 +41,6 @@ public class ExecutivoGeneratorService {
         readAndCreateExpenseStructure(year);
         peekOnJudiciaryAndComplementStructure(year);
         generalGeneratorService.aggregateAllPowerSpending(poder);
-        generalGeneratorService.setRelationships(poder);
         log.info("Poder Executivo - Finalizado");
         return poder;
     }

@@ -48,7 +48,6 @@ public class OrgaosAutonomosGeneratorService {
         generateMinisterioPublico(MINISTERIO_PUBLICO_DF_TERRITORIOS);
         generateMinisterioPublico(ESCOLA_SUPERIOR_MINISTERIO_PUBLICO_UNIAO);
         generalGeneratorService.aggregateAllPowerSpending(poder);
-        generalGeneratorService.setRelationships(poder);
         log.info("Órgãos Autônomos - Finalizado");
         return poder;
     }
