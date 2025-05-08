@@ -50,7 +50,6 @@ public class JudiciarioGeneratorService {
         generateStandardJustice(year, JUSTICA_DF_TERRITORIOS);
         generateStandardJustice(year, CONSELHO_NACIONAL_JUSTICA);
         generalGeneratorService.aggregateAllPowerSpending(poder);
-        generalGeneratorService.setRelationships(poder);
         log.info("Poder Judiciário - Finalizado");
         return poder;
     }

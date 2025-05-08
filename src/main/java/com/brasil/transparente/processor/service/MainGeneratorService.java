@@ -1,6 +1,7 @@
 package com.brasil.transparente.processor.service;
 
 import com.brasil.transparente.processor.entity.Poder;
+import com.brasil.transparente.processor.entity.UnidadeFederativa;
 import com.brasil.transparente.processor.util.NameCorrector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,18 +29,22 @@ public class MainGeneratorService {
     @Autowired
     private NameCorrector nameCorrector;
 
+    private static final String UNIAO_FEDERAL = "União Federal";
     List<Poder> poderList = new ArrayList<>();
 
     public void generateCompleteReportService(String year) {
+        UnidadeFederativa unidadeFederativa = new UnidadeFederativa(UNIAO_FEDERAL);
         poderList.add(executivoGeneratorService.generateExecutiveBranch(year));
         poderList.add(judiciarioGeneratorService.generateJudiciaryBranch(year));
         poderList.add(legislativoGeneratorService.generateLegislativeBranch());
         poderList.add(orgaosAutonomosGeneratorService.generateOrgaosAutonomos(year));
-        double gastoTotalValue = generalGeneratorService.aggregateAndSaveTotalExpense(poderList);
-        generalGeneratorService.removeNegativeOrZeroExpenses(poderList);
-        generalGeneratorService.setTotalPercentages(poderList, gastoTotalValue);
-        nameCorrector.refactorNames(poderList);
-        generalGeneratorService.saveStructure(poderList);
+        unidadeFederativa.setListPoder(poderList);
+        generalGeneratorService.setRelationships(unidadeFederativa);
+        double gastoTotalValue = generalGeneratorService.aggregateTotalExpense(unidadeFederativa);
+        generalGeneratorService.removeNegativeOrZeroExpenses(unidadeFederativa.getListPoder());
+        generalGeneratorService.setTotalPercentages(unidadeFederativa.getListPoder(), gastoTotalValue);
+        nameCorrector.refactorNames(unidadeFederativa.getListPoder());
+        generalGeneratorService.saveStructure(unidadeFederativa);
         simplifiedGeneratorService.generateSimplifiedReport();
         log.info("[FINALIZADO]");
     }

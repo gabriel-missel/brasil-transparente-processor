@@ -1,8 +1,7 @@
 package com.brasil.transparente.processor.service;
 
 import com.brasil.transparente.processor.entity.*;
-import com.brasil.transparente.processor.repository.GastoTotalRepository;
-import com.brasil.transparente.processor.repository.PoderRepository;
+import com.brasil.transparente.processor.repository.UnidadeFederativaRepository;
 import com.brasil.transparente.processor.util.Constants;
 import com.brasil.transparente.processor.util.OrdererService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +20,7 @@ public class GeneralGeneratorService {
     @Autowired
     private OrdererService ordererService;
     @Autowired
-    private PoderRepository poderRepository;
-    @Autowired
-    private GastoTotalRepository gastoTotalRepository;
+    private UnidadeFederativaRepository unidadeFederativaRepository;
 
     public Ministerio findOrCreateMinisterio(String nameMinisterioLine, Poder poder) {
         for (Ministerio ministerio : poder.getListMinisterio()) {
@@ -107,29 +104,32 @@ public class GeneralGeneratorService {
         poder.setTotalValueSpent(despesaTotalPoder);
     }
 
-    public double aggregateAndSaveTotalExpense(List<Poder> poderList) {
+    public double aggregateTotalExpense(UnidadeFederativa unidadeFederativa) {
         log.info("Calculando gasto total");
         double gastoTotalValue = 0;
-        for (Poder poder : poderList) {
+        for (Poder poder : unidadeFederativa.getListPoder()) {
             gastoTotalValue += poder.getTotalValueSpent();
         }
-        GastoTotal gastoTotal = new GastoTotal(gastoTotalValue);
-        return gastoTotalRepository.save(gastoTotal).getGastoTotalValue();
+        unidadeFederativa.setTotalValueSpent(gastoTotalValue);
+        return gastoTotalValue;
     }
 
-    public void setRelationships(Poder poder) {
-        log.info("{} - Criando relacionamentos entre as entidades", poder.getNamePoder());
-        for (Ministerio ministerio : poder.getListMinisterio()) {
-            for (Orgao orgao : ministerio.getListOrgao()) {
-                for (UnidadeGestora unidadeGestora : orgao.getListUnidadeGestora()) {
-                    for (ElementoDespesa elementoDespesa : unidadeGestora.getListElementoDespesa()) {
-                        elementoDespesa.setUnidadeGestora(unidadeGestora);
+    public void setRelationships(UnidadeFederativa unidadeFederativa) {
+        log.info("{} - Criando relacionamentos entre as entidades", unidadeFederativa.getNameUnidadeFederativa());
+        for (Poder poder : unidadeFederativa.getListPoder()) {
+            for (Ministerio ministerio : poder.getListMinisterio()) {
+                for (Orgao orgao : ministerio.getListOrgao()) {
+                    for (UnidadeGestora unidadeGestora : orgao.getListUnidadeGestora()) {
+                        for (ElementoDespesa elementoDespesa : unidadeGestora.getListElementoDespesa()) {
+                            elementoDespesa.setUnidadeGestora(unidadeGestora);
+                        }
+                        unidadeGestora.setOrgao(orgao);
                     }
-                    unidadeGestora.setOrgao(orgao);
+                    orgao.setMinisterio(ministerio);
                 }
-                orgao.setMinisterio(ministerio);
+                ministerio.setPoder(poder);
             }
-            ministerio.setPoder(poder);
+            poder.setUnidadeFederativa(unidadeFederativa);
         }
     }
 
@@ -164,7 +164,6 @@ public class GeneralGeneratorService {
 
     public void setTotalPercentages(List<Poder> poderList, double gastoTotalValue) {
         log.info("Calculando porcentagens finais");
-
         poderList = ordererService.orderPoderListBySpending(poderList);
         Iterator<Poder> poderIterator = poderList.iterator();
         while (poderIterator.hasNext()) {
@@ -232,9 +231,9 @@ public class GeneralGeneratorService {
         }
     }
 
-    public void saveStructure(List<Poder> poderList) {
+    public void saveStructure(UnidadeFederativa unidadeFederativa) {
         log.info("Salvando no banco de dados");
-        poderRepository.saveAll(poderList);
+        unidadeFederativaRepository.save(unidadeFederativa);
     }
 
     public void logInvalidLine(String line) {

@@ -3,7 +3,6 @@ package com.brasil.transparente.processor.service;
 import com.brasil.transparente.processor.entity.DespesaSimplicada;
 import com.brasil.transparente.processor.entity.ElementoDespesa;
 import com.brasil.transparente.processor.repository.*;
-import com.brasil.transparente.processor.util.Constants;
 import com.brasil.transparente.processor.util.SimplifiedConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +23,14 @@ public class SimplifiedGeneratorService {
     @Autowired
     private ElementoDespesaRepository elementoDespesaRepository;
     @Autowired
-    private GastoTotalRepository gastoTotalRepository;
+    private UnidadeFederativaRepository unidadeFederativaRepository;
     @Autowired
     private DespesaSimplificadaRepository despesaSimplificadaRepository;
     private double allMoneySpent;
 
     public void generateSimplifiedReport() {
         log.info("Gerando estrutura simplificada");
-        allMoneySpent = gastoTotalRepository.findAll().getFirst().getGastoTotalValue();
+        allMoneySpent = unidadeFederativaRepository.findAll().getFirst().getTotalValueSpent();
         calculateAndSave1();
         calculateAndSave2();
         calculateAndSave3();

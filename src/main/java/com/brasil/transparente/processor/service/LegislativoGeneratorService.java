@@ -37,7 +37,6 @@ public class LegislativoGeneratorService {
         generateCamaraDeputados();
         generateSenado();
         generalGeneratorService.aggregateAllPowerSpending(poder);
-        generalGeneratorService.setRelationships(poder);
         log.info("Poder Legislativo - Finalizado");
         return poder;
     }
