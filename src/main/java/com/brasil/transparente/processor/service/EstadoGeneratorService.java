@@ -2,7 +2,9 @@ package com.brasil.transparente.processor.service;
 
 import com.brasil.transparente.processor.entity.*;
 import com.brasil.transparente.processor.util.Constants;
+import com.brasil.transparente.processor.util.NameCorrector;
 import com.brasil.transparente.processor.util.UnidadesFederativasConstants;
+import com.brasil.transparente.processor.util.estados.RSConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +27,10 @@ public class EstadoGeneratorService {
 
     @Autowired
     private GeneralGeneratorService generalGeneratorService;
+    @Autowired
+    private NameCorrector nameCorrector;
+    @Autowired
+    private SimplifiedGeneratorService simplifiedGeneratorService;
     @Value("${CSV_PATH}")
     private String csvPath;
     private final List<Poder> poderList = new ArrayList<>(Arrays.asList(
@@ -35,7 +41,7 @@ public class EstadoGeneratorService {
     ));
 
     public void generateStateExpenses(String year, String state) {
-        UnidadeFederativa unidadeFederativa = new UnidadeFederativa(UnidadesFederativasConstants.RS);
+        UnidadeFederativa unidadeFederativa = new UnidadeFederativa(UnidadesFederativasConstants.RS, 22L);
         int month = 1;
         while (month <= 12) {
             String yearString = String.valueOf(year);
@@ -48,6 +54,7 @@ public class EstadoGeneratorService {
             month++;
         }
 
+        unidadeFederativa.setListPoder(poderList);
         for (Poder poder : poderList) {
             generalGeneratorService.aggregateAllPowerSpending(poder);
             generalGeneratorService.setRelationships(unidadeFederativa);
@@ -55,7 +62,9 @@ public class EstadoGeneratorService {
         double gastoTotalValue = generalGeneratorService.aggregateTotalExpense(unidadeFederativa);
         generalGeneratorService.removeNegativeOrZeroExpenses(unidadeFederativa.getListPoder());
         generalGeneratorService.setTotalPercentages(unidadeFederativa.getListPoder(), gastoTotalValue);
+        nameCorrector.refactorNames(unidadeFederativa.getListPoder());
         generalGeneratorService.saveStructure(unidadeFederativa);
+        simplifiedGeneratorService.generateSimplifiedReportRS();
         log.info("Rio Grande do Sul - Finalizado");
     }
 
@@ -74,8 +83,8 @@ public class EstadoGeneratorService {
                 String poderString = refinedList.get(12);
                 String ministerio = refinedList.get(16);
                 String orgao = refinedList.get(18);
-                String unidadeGestora = refinedList.get(26);
-                String elementoDespesa = refinedList.get(28);
+                String unidadeGestora = refinedList.get(18);
+                String elementoDespesa = refinedList.get(26);
                 String valorString = refinedList.get(44);
                 valorString = valorString.replace(",", ".");
                 double valor = Double.parseDouble(valorString);
@@ -85,6 +94,12 @@ public class EstadoGeneratorService {
                         || Objects.equals(tipoGasto, Constants.RETENCAO)
                         || Objects.equals(valor, Constants.ZERO_DOUBLE)) {
                     continue;
+                }
+
+                String ministerioRevisado = resolveMinisterio(ministerio);
+                if (Objects.nonNull(ministerioRevisado)) {
+                    orgao = ministerio;
+                    ministerio = ministerioRevisado;
                 }
 
                 Poder poder = definePoder(poderString);
@@ -108,6 +123,28 @@ public class EstadoGeneratorService {
             case Constants.LEGISLATIVO -> poderList.get(1);
             case Constants.JUDICIARIO -> poderList.get(2);
             case null, default -> poderList.get(3);
+        };
+    }
+
+    private String resolveMinisterio(String ministerio) {
+        return switch (ministerio) {
+            case RSConstants.INSTITUTO_RIOGRANDENSE_ARROZ -> RSConstants.SECRETARIA_AGRICULTURA;
+            case RSConstants.UERGS, RSConstants.FUNDACAO_ESCOLA_LIBERATO, RSConstants.CONSELHO_EDUCACAO -> RSConstants.SECRETARIA_EDUCACAO;
+            case RSConstants.FUNDACAO_AMPARO_PESQUISA -> RSConstants.SECRETARIA_INOVACAO;
+            case RSConstants.FUNDACAO_PROTECAO_AMBIENTAL_ROESSLER -> RSConstants.SECRETARIA_MEIO_AMBIENTE;
+            case RSConstants.ESCRITORIO_DESENVOLVIMENTO_PROJETOS,
+                 RSConstants.FUNDACAO_PLANEJAMENTO_METROPOLITANO_REGIONAL -> RSConstants.SECRETARIA_PLANEJAMENTO;
+            case RSConstants.FUDACAO_ATENDIMENTO_SOCIO_EDUCATIVO, RSConstants.FUNDACAO_PROTECAO_ESPECIAL,
+                 RSConstants.FUNDACAO_GAUCHA_TRABALHO_ACAO_SOCIAL, RSConstants.FUNDACAO_PPD_PPAH ->
+                    RSConstants.SECRETARIA_DESENVOLVIMENTO_SOCIAL;
+            case RSConstants.FUNDACAO_ORQUESTRA, RSConstants.FUNDACAO_TEATRO -> RSConstants.SECRETARIA_CULTURA;
+            case RSConstants.DEPARTAMENTO_ESTADUAL_TRANSITO -> RSConstants.SECRETARIA_SEGURANCA_PUBLICA;
+            case RSConstants.DEPARTAMENTO_ESTRADAS_RODAGEM -> RSConstants.SECRETARIA_LOGISTICA_TRANSPORTES;
+            case RSConstants.JUNTA_COMERCIAL -> RSConstants.SECRETARIA_DESENVOLVIMENTO_ECONOMICO;
+            case RSConstants.AGENCIA_DELEGADOS -> RSConstants.SECRETARIA_PARCERIAS_CONCESSOES;
+            case RSConstants.INSTITUTO_PREVIDENCIA, RSConstants.INSTITUTO_ASSISTENCIA_SAUDE_SERVIDORES, RSConstants.ENCARGOS_FINANCEIROS ->
+                    RSConstants.SECRETARIA_FAZENDA;
+            default -> ministerio;
         };
     }
 }

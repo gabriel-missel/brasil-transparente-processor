@@ -67,7 +67,7 @@ public class JudiciarioGeneratorService {
             String yearString = String.valueOf(year);
             String monthString = String.format("%02d", month);
             String documentNumber = yearString + monthString;
-            String relativePath = "/Judiciario/" + tribunal + "/" + documentNumber + ".csv";
+            String relativePath = "/Judiciario/" + tribunal + "/" +"despesas" + year + "/" + documentNumber + ".csv";
             String filePath = Paths.get(csvPath, relativePath).toString();
             String delimiter = "\t";
             createStandardJusticeExpenseStrucutre(filePath, delimiter, month, tribunal);

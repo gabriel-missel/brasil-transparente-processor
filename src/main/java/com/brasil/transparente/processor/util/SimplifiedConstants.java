@@ -63,9 +63,18 @@ public class SimplifiedConstants {
     public static final String MINISTERIO_DEFESA = "Ministério da Defesa";
     public static final String PODER_JUDICIARIO = "Poder Judiciário";
     public static final String PODER_JUDICIARIO_FEDERAL = "Poder Judiciário Federal";
+    public static final String PODER_JUDICIARIO_ESTADUAL = "Poder Judiciário Estadual";
     public static final String DEFESA = "Defesa";
     public static final String BENEFICIOS_TRABALHISTAS = "Benefícios Trabalhistas**";
     public static final String SEGURO_DESEMPREGO_ABONO_SALARIAL = "Seguro Desemprego e Abono Salarial";
     public static final String OUTROS = "Outros";
-
+    public static final String TERMO_APOSENTADORIA1 = "aposent";
+    public static final String TERMO_APOSENTADORIA2 = "pens";
+    public static final String TERMO_APOSENTADORIA3 = "previd";
+    public static final String INSTITUTO_PREVIDENCIA_RS = "Instituto de Previdência do Estado do Rio Grande do Sul";
+    public static final String SECRETARIA_SEGURANCA_RS = "Secretaria da Segurança Pública";
+    public static final String SECRETARIA_PENAL_SOCIOEDUCATIVO_RS = "Secretaria de Sistemas Penal e Socioeducativo";
+    public static final String SECRETARIA_SAUDE_RS = "Secretaria da Saúde";
+    public static final String SECRETARIA_EDUCACAO_RS = "Secretaria da Educação";
+    public static final String SEGURANCA = "Segurança";
 }

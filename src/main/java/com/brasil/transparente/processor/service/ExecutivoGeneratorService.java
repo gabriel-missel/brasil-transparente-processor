@@ -171,7 +171,7 @@ public class ExecutivoGeneratorService {
             String yearString = String.valueOf(year);
             String monthString = String.format("%02d", month);
             String documentNumber = yearString + monthString;
-            String relativePath = "\\Judiciario\\Justiça Federal\\";
+            String relativePath = "/Judiciario/Justiça Federal/despesas" + year + "/";
             String filePath = csvPath + relativePath + documentNumber + ".csv";
             String delimiter = "\t";
             log.info("Justiça Federal - Lendo arquivos de despesas e criando estrutura de despesa. Mês = {}", month);
