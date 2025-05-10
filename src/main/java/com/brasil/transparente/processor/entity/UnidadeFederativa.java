@@ -26,14 +26,14 @@ public class UnidadeFederativa {
     @JsonManagedReference
     private List<Poder> listPoder;
 
-    public UnidadeFederativa() {
-        this.listPoder = new ArrayList<>();
-        this.totalValueSpent = 0.0;
-    }
-
-    public UnidadeFederativa(String nameUnidadeFederativa) {
+    public UnidadeFederativa(String nameUnidadeFederativa, Long unidadeFederativaId) {
+        this.unidadeFederativaId = unidadeFederativaId;
         this.nameUnidadeFederativa = nameUnidadeFederativa;
         this.listPoder = new ArrayList<>();
         this.totalValueSpent = 0.0;
     }
+
+    public UnidadeFederativa() {
+    }
+
 }

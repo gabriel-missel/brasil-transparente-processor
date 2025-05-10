@@ -28,12 +28,14 @@ public class MainGeneratorService {
     private GeneralGeneratorService generalGeneratorService;
     @Autowired
     private NameCorrector nameCorrector;
+    @Autowired
+    private EstadoGeneratorService estadoGeneratorService;
 
     private static final String UNIAO_FEDERAL = "União Federal";
     List<Poder> poderList = new ArrayList<>();
 
     public void generateCompleteReportService(String year) {
-        UnidadeFederativa unidadeFederativa = new UnidadeFederativa(UNIAO_FEDERAL);
+        UnidadeFederativa unidadeFederativa = new UnidadeFederativa(UNIAO_FEDERAL, 1L);
         poderList.add(executivoGeneratorService.generateExecutiveBranch(year));
         poderList.add(judiciarioGeneratorService.generateJudiciaryBranch(year));
         poderList.add(legislativoGeneratorService.generateLegislativeBranch());
@@ -45,7 +47,10 @@ public class MainGeneratorService {
         generalGeneratorService.setTotalPercentages(unidadeFederativa.getListPoder(), gastoTotalValue);
         nameCorrector.refactorNames(unidadeFederativa.getListPoder());
         generalGeneratorService.saveStructure(unidadeFederativa);
-        simplifiedGeneratorService.generateSimplifiedReport();
+        simplifiedGeneratorService.generateSimplifiedReportUniao();
+        log.info("Finalizado - União");
+        estadoGeneratorService.generateStateExpenses(year, "RS");
+        log.info("Finalizado - Estados");
         log.info("[FINALIZADO]");
     }
 

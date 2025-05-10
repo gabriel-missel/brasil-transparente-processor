@@ -13,8 +13,8 @@ public final class Constants {
     public static final String LIQUIDACAO = "Liquidação";
     public static final String EMPENHO = "Empenho";
     public static final String RETENCAO = "Retenção";
-    public static final String EXECUTIVO = "Executivo";
-    public static final String LEGISLATIVO = "Legislativo";
-    public static final String JUDICIARIO = "Judiciário";
+    public static final String EXECUTIVO = "PODER EXECUTIVO";
+    public static final String LEGISLATIVO = "PODER LEGISLATIVO";
+    public static final String JUDICIARIO = "PODER JUDICIARIO";
 
 }
