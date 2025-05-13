@@ -49,6 +49,9 @@ dependencies {
     // Lombok
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // Liquibase
+    implementation 'org.liquibase:liquibase-core'
 }
 
 application {

@@ -14,13 +14,12 @@ Módulo responsável por ler arquivos de gastos de todas as partes da União pre
    ```bash
    git clone https://github.com/brasil-transparente/brasil-transparente-processor.git
    ```
-2. Crie a estrutura do banco no MySQL utilizando a query no arquivo table_setup.sql, localizado no Drive (link abaixo).
-3. Copie os arquivos de gastos da União do Drive (link abaixo) para a pasta do projeto.
-4. Certifique-se de que os paths no projeto estão apontando para o local correto dos arquivos.
-5. Certifique-se de que os dados do banco de dados local estão corretos no application.properties.
-6. Suba a aplicação utilizando o SpringBoot, executando a classe BrasilTransparenteProcessorApplication.
-7. Chame o Controller utilizando o POST ( /processYear={ano} ) e passando o ano de 2024.
-8. Se tudo estiver correto, a aplicação irá ler todos os arquivos e salvar no banco local todos os dados.
+2. Copie os arquivos de gastos da União do Drive (link abaixo) para a pasta do projeto.
+3. Certifique-se de que os paths no projeto estão apontando para o local correto dos arquivos.
+4. Certifique-se de que os dados do banco de dados local estão corretos no application.properties.
+5. Suba a aplicação utilizando o SpringBoot, executando a classe BrasilTransparenteProcessorApplication.
+6. Chame o Controller utilizando o POST ( /processYear={ano} ) e passando o ano de 2024.
+7. Se tudo estiver correto, a aplicação irá ler todos os arquivos e salvar no banco local todos os dados.
 
 📁 Link para o Drive: https://drive.google.com/drive/folders/1EvbRIqP9Eg8dZJP6RKSpf7KoippdhC3c?usp=drive_link
 
