@@ -25,7 +25,6 @@ public class ExecutivoGeneratorService {
     private GeneralGeneratorService generalGeneratorService;
     @Autowired
     private NameCorrector nameCorrector;
-
     @Value("${CSV_PATH}")
     private String csvPath;
 
