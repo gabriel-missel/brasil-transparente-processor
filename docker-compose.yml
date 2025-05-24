@@ -1,0 +1,23 @@
+services:
+
+  gastosDB:
+    image: mysql:8.0
+    container_name: brasil_transparente_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD_LOCAL:-rootpassword} 
+      MYSQL_DATABASE: gastos
+      MYSQL_USER: ${DB_USER_LOCAL:-user}
+      MYSQL_PASSWORD: ${DB_PASSWORD_LOCAL:-gastospassword}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
