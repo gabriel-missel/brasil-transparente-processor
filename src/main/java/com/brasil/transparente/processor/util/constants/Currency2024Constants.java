@@ -1,4 +1,4 @@
-package com.brasil.transparente.processor.util;
+package com.brasil.transparente.processor.util.constants;
 
 public class Currency2024Constants {
 
