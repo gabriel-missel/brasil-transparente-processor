@@ -11,8 +11,11 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ministerio")
-public class Ministerio {
+public class Ministerio implements Gasto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +35,6 @@ public class Ministerio {
     private double totalValueSpent;
 
     private double percentageOfTotal;
-
-    public Ministerio() {
-    }
 
     public Ministerio(String nameMinisterio) {
         this.nameMinisterio = nameMinisterio;

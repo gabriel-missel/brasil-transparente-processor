@@ -164,7 +164,7 @@ public class GeneralGeneratorService {
 
     public void setTotalPercentages(List<Poder> poderList, double gastoTotalValue) {
         log.info("Calculando porcentagens finais");
-        poderList = ordererService.orderPoderListBySpending(poderList);
+        poderList = ordererService.orderBySpending(poderList);
         Iterator<Poder> poderIterator = poderList.iterator();
         while (poderIterator.hasNext()) {
             Poder poder = poderIterator.next();
@@ -176,7 +176,7 @@ public class GeneralGeneratorService {
                 poder.setPercentageOfTotal(poderPercentage);
             }
 
-            List<Ministerio> ministerioList = ordererService.orderMinisterioListBySpending(poder.getListMinisterio());
+            List<Ministerio> ministerioList = ordererService.orderBySpending(poder.getListMinisterio());
             Iterator<Ministerio> ministerioIterator = ministerioList.iterator();
             while (ministerioIterator.hasNext()) {
                 Ministerio ministerio = ministerioIterator.next();
@@ -188,7 +188,7 @@ public class GeneralGeneratorService {
                     ministerio.setPercentageOfTotal(ministerioPercentage);
                 }
 
-                List<Orgao> orderedListOrgao = ordererService.orderOrgaoListBySpending(ministerio.getListOrgao());
+                List<Orgao> orderedListOrgao = ordererService.orderBySpending(ministerio.getListOrgao());
                 Iterator<Orgao> orgaoIterator = orderedListOrgao.iterator();
                 while (orgaoIterator.hasNext()) {
                     Orgao orgao = orgaoIterator.next();
@@ -200,7 +200,7 @@ public class GeneralGeneratorService {
                         orgao.setPercentageOfTotal(orgaoPercentage);
                     }
 
-                    List<UnidadeGestora> orderedListUnidadeGestora = ordererService.orderUnidadeGestoraListBySpending(orgao.getListUnidadeGestora());
+                    List<UnidadeGestora> orderedListUnidadeGestora = ordererService.orderBySpending(orgao.getListUnidadeGestora());
                     Iterator<UnidadeGestora> unidadeGestoraIterator = orderedListUnidadeGestora.iterator();
                     while (unidadeGestoraIterator.hasNext()) {
                         UnidadeGestora unidadeGestora = unidadeGestoraIterator.next();
@@ -214,7 +214,7 @@ public class GeneralGeneratorService {
                         double unidadeGestoraPercentage = (unidadeGestora.getTotalValueSpent() * 100) / orgao.getTotalValueSpent();
                         unidadeGestora.setPercentageOfTotal(unidadeGestoraPercentage);
 
-                        List<ElementoDespesa> orderedListElementoDespesa = ordererService.orderElementoDespesaListBySpending(unidadeGestora.getListElementoDespesa());
+                        List<ElementoDespesa> orderedListElementoDespesa = ordererService.orderBySpending(unidadeGestora.getListElementoDespesa());
                         Iterator<ElementoDespesa> elementoDespesaIterator = orderedListElementoDespesa.iterator();
                         while (elementoDespesaIterator.hasNext()) {
                             ElementoDespesa elementoDespesa = elementoDespesaIterator.next();

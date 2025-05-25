@@ -30,7 +30,7 @@ public class EstadoGeneratorService {
     @Autowired
     private NameCorrector nameCorrector;
     @Autowired
-    private SimplifiedGeneratorService simplifiedGeneratorService;
+    private DespesaSimplificadaGeneratorService despesaSimplificadaGeneratorService;
     @Value("${CSV_PATH}")
     private String csvPath;
     private final List<Poder> poderList = new ArrayList<>(Arrays.asList(
@@ -64,7 +64,7 @@ public class EstadoGeneratorService {
         generalGeneratorService.setTotalPercentages(unidadeFederativa.getListPoder(), gastoTotalValue);
         nameCorrector.refactorNames(unidadeFederativa.getListPoder());
         generalGeneratorService.saveStructure(unidadeFederativa);
-        simplifiedGeneratorService.generateSimplifiedReportRS();
+        despesaSimplificadaGeneratorService.generateSimplifiedReportRS();
         log.info("Rio Grande do Sul - Finalizado");
     }
 

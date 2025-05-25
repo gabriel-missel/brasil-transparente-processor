@@ -3,8 +3,7 @@ package com.brasil.transparente.processor.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "orgao")
-public class Orgao {
+public class Orgao implements Gasto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +35,6 @@ public class Orgao {
     private double totalValueSpent;
 
     private double percentageOfTotal;
-
-    public Orgao() {
-    }
 
     public Orgao(String nameOrgao) {
         this.nameOrgao = nameOrgao;

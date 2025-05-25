@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class SimplifiedGeneratorService {
+public class DespesaSimplificadaGeneratorService {
 
     @Autowired
     private MinisterioRepository ministerioRepository;

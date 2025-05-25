@@ -16,8 +16,7 @@ public class MainGeneratorController {
     private EstadoGeneratorService estadoGeneratorService;
 
     @PostMapping("/processYear")
-    public String processYearAndSaveOnDatabase(@RequestParam String year) {
+    public void processYearAndSaveOnDatabase(@RequestParam String year) {
         mainGeneratorService.generateCompleteReportService(year);
-        return "[SAVED ON DATABASE]";
     }
 }

@@ -2,14 +2,16 @@ package com.brasil.transparente.processor.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "elemento_despesa")
-public class ElementoDespesa {
+public class ElementoDespesa implements Gasto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +27,6 @@ public class ElementoDespesa {
     private double totalValueSpent;
 
     private double percentageOfTotal;
-
-    public ElementoDespesa() {
-    }
 
     public ElementoDespesa(String nameElementoDespesa) {
         this.nameElementoDespesa = nameElementoDespesa;
