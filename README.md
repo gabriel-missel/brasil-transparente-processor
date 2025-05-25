@@ -16,17 +16,21 @@ Módulo responsável por ler arquivos de gastos de todas as partes da União pre
    git clone https://github.com/brasil-transparente/brasil-transparente-processor.git
    ```
 2. Copie os arquivos de gastos da União do Drive (link abaixo) para a pasta do projeto.
-3. Adicione um arquivo .env na raiz do projeto com os seguintes campos.
+3. Certifique-se de ter o Docker instalado na sua máquina.
+4. Adicione um arquivo .env na raiz do projeto com os seguintes campos.
 ```
-DB_USER_LOCAL= seu_usuário_aqui
-DB_PASSWORD_LOCAL= sua_senha_aqui
+DB_USER_LOCAL=seu_usuário_aqui
+DB_PASSWORD_LOCAL=sua_senha_aqui
 ```
-4. docker compose up, para iniciar o banco de dados.
-5. Certifique-se de que os paths no projeto estão apontando para o local correto dos arquivos.
-6. Certifique-se de que os dados do banco de dados local estão corretos no application.properties.
-7. Suba a aplicação utilizando o SpringBoot, executando a classe BrasilTransparenteProcessorApplication.
-8. Chame o Controller utilizando o POST ( /processYear={ano} ) e passando o ano de 2024.
-9. Se tudo estiver correto, a aplicação irá ler todos os arquivos e salvar no banco local todos os dados.
+5. No terminal, rode o comando abaixo para iniciar criar o container e iniciar o banco de dados.
+```bash
+   docker compose up
+```
+6. Certifique-se de que o CSV_PATH no application.properties do projeto está apontando para o local correto dos arquivos.
+7. Certifique-se de que os dados do banco de dados local estão corretos no application.properties.
+8. Suba a aplicação utilizando o SpringBoot, executando a classe BrasilTransparenteProcessorApplication.
+9. Chame o Controller utilizando o POST ( /processYear={ano} ) e passando o ano de 2024.
+10. Se tudo estiver correto, a aplicação irá ler todos os arquivos e salvar no banco local todos os dados.
 
 📁 Link para o Drive: https://drive.google.com/drive/folders/1EvbRIqP9Eg8dZJP6RKSpf7KoippdhC3c?usp=drive_link
 
