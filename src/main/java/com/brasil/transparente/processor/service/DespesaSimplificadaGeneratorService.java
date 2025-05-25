@@ -3,15 +3,15 @@ package com.brasil.transparente.processor.service;
 import com.brasil.transparente.processor.entity.DespesaSimplificada;
 import com.brasil.transparente.processor.entity.ElementoDespesa;
 import com.brasil.transparente.processor.repository.*;
-import com.brasil.transparente.processor.util.SimplifiedConstants;
-import com.brasil.transparente.processor.util.UnidadesFederativasConstants;
+import com.brasil.transparente.processor.util.constants.SimplifiedConstants;
+import com.brasil.transparente.processor.util.constants.UnidadesFederativasConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class SimplifiedGeneratorService {
+public class DespesaSimplificadaGeneratorService {
 
     @Autowired
     private MinisterioRepository ministerioRepository;

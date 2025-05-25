@@ -2,8 +2,7 @@ package com.brasil.transparente.processor.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "unidade_federativa")
-public class UnidadeFederativa {
+public class UnidadeFederativa implements Gasto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +33,6 @@ public class UnidadeFederativa {
         this.nameUnidadeFederativa = nameUnidadeFederativa;
         this.listPoder = new ArrayList<>();
         this.totalValueSpent = 0.0;
-    }
-
-    public UnidadeFederativa() {
     }
 
 }

@@ -1,4 +1,4 @@
-package com.brasil.transparente.processor.util.estados;
+package com.brasil.transparente.processor.util.constants.estados;
 
 import lombok.Getter;
 

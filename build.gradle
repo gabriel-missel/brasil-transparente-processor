@@ -46,6 +46,10 @@ dependencies {
 
     // Liquibase
     implementation 'org.liquibase:liquibase-core'
+
+    // JUnit
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.12.2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 application {

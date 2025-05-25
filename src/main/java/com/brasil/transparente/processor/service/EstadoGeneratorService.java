@@ -1,10 +1,10 @@
 package com.brasil.transparente.processor.service;
 
 import com.brasil.transparente.processor.entity.*;
-import com.brasil.transparente.processor.util.Constants;
+import com.brasil.transparente.processor.util.constants.Constants;
 import com.brasil.transparente.processor.util.NameCorrector;
-import com.brasil.transparente.processor.util.UnidadesFederativasConstants;
-import com.brasil.transparente.processor.util.estados.RSConstants;
+import com.brasil.transparente.processor.util.constants.UnidadesFederativasConstants;
+import com.brasil.transparente.processor.util.constants.estados.RSConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +30,7 @@ public class EstadoGeneratorService {
     @Autowired
     private NameCorrector nameCorrector;
     @Autowired
-    private SimplifiedGeneratorService simplifiedGeneratorService;
+    private DespesaSimplificadaGeneratorService despesaSimplificadaGeneratorService;
     @Value("${CSV_PATH}")
     private String csvPath;
     private final List<Poder> poderList = new ArrayList<>(Arrays.asList(
@@ -64,7 +64,7 @@ public class EstadoGeneratorService {
         generalGeneratorService.setTotalPercentages(unidadeFederativa.getListPoder(), gastoTotalValue);
         nameCorrector.refactorNames(unidadeFederativa.getListPoder());
         generalGeneratorService.saveStructure(unidadeFederativa);
-        simplifiedGeneratorService.generateSimplifiedReportRS();
+        despesaSimplificadaGeneratorService.generateSimplifiedReportRS();
         log.info("Rio Grande do Sul - Finalizado");
     }
 

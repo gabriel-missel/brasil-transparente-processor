@@ -21,7 +21,7 @@ public class MainGeneratorService {
     @Autowired
     private LegislativoGeneratorService legislativoGeneratorService;
     @Autowired
-    private SimplifiedGeneratorService simplifiedGeneratorService;
+    private DespesaSimplificadaGeneratorService despesaSimplificadaGeneratorService;
     @Autowired
     private OrgaosAutonomosGeneratorService orgaosAutonomosGeneratorService;
     @Autowired
@@ -47,7 +47,7 @@ public class MainGeneratorService {
         generalGeneratorService.setTotalPercentages(unidadeFederativa.getListPoder(), gastoTotalValue);
         nameCorrector.refactorNames(unidadeFederativa.getListPoder());
         generalGeneratorService.saveStructure(unidadeFederativa);
-        simplifiedGeneratorService.generateSimplifiedReportUniao();
+        despesaSimplificadaGeneratorService.generateSimplifiedReportUniao();
         log.info("Finalizado - União");
         estadoGeneratorService.generateStateExpenses(year, "RS");
         log.info("Finalizado - Estados");

@@ -1,9 +1,9 @@
 package com.brasil.transparente.processor.service;
 
 import com.brasil.transparente.processor.entity.*;
-import com.brasil.transparente.processor.util.Constants;
-import com.brasil.transparente.processor.util.Currency2024Constants;
-import com.brasil.transparente.processor.util.EmbaixadasConstants;
+import com.brasil.transparente.processor.util.constants.Constants;
+import com.brasil.transparente.processor.util.constants.Currency2024Constants;
+import com.brasil.transparente.processor.util.constants.EmbaixadasConstants;
 import com.brasil.transparente.processor.util.NameCorrector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
