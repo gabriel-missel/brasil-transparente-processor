@@ -83,7 +83,7 @@ public class OrgaosAutonomosGeneratorService {
     private void createTribunalContasUniaoStructure(String filePath, String delimiter, int month) {
         log.info("{} - Lendo arquivos de despesas e criando estrutura de despesa. Mês = {}", OrgaosAutonomosGeneratorService.TRIBUNAL_CONTAS_UNIAO, month);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
-            String firstLine = br.readLine();
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 String[] rawList = line.split(delimiter);
@@ -130,7 +130,7 @@ public class OrgaosAutonomosGeneratorService {
     private void createDefensoriaPublicaUniaoStructure(String filePath, String delimiter) {
         log.info("Lendo Defensoria Publica da Uniao e criando estrutura de dados");
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
-            String firstLine = br.readLine();
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 String[] rawList = line.split(delimiter);
@@ -168,7 +168,7 @@ public class OrgaosAutonomosGeneratorService {
     private void createMinisterioPublicoUniaoStructure(String filePath, String delimiter, String nameOrgao) {
         log.info("Lendo {} e criando estrutura de dados", nameOrgao);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
-            String firstLine = br.readLine();
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 String[] rawList = line.split(delimiter);

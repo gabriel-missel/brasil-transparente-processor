@@ -78,7 +78,7 @@ public class JudiciarioGeneratorService {
     private void createExpenseStructureStf(String filePath, String delimiter) {
         log.info("Lendo arquivo do STF e criando estrutura de despesas");
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
-            String firstLine = br.readLine();
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 String[] rawList = line.split(delimiter);
@@ -117,7 +117,7 @@ public class JudiciarioGeneratorService {
     private void createStandardJusticeExpenseStrucutre(String filePath, String delimiter, int month, String tribunal) {
         log.info("{} - Lendo arquivos e criando estrutura de despesas. Mês = {}", tribunal, month);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
-            String firstLine = br.readLine();
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 String[] rawList = line.split(delimiter);

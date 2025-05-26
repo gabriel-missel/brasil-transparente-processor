@@ -10,7 +10,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class NameCorrectorLoaderTest {
+class NameCorrectorLoaderTest {
 
     private ResourceLoader resourceLoader;
     private Resource resource;

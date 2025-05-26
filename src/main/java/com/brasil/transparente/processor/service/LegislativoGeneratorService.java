@@ -58,7 +58,7 @@ public class LegislativoGeneratorService {
     private void createCamaraDeputadosStructure(String filePath, String delimiter) {
         log.info("Camara de Deputados - Lendo arquivos de despesas e criando estrutura de despesa.");
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
-            String firstLine = br.readLine();
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 String[] rawList = line.split(delimiter);
@@ -98,7 +98,7 @@ public class LegislativoGeneratorService {
     private void createSenadoFederalStructure(String filePath, String delimiter) {
         log.info("Senado Federal - Lendo arquivos de despesas e criando estrutura de despesa.");
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
-            String firstLine = br.readLine();
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 String[] rawList = line.split(delimiter);
