@@ -61,7 +61,7 @@ public class ExecutivoGeneratorService {
     private void createExpensesStructure(String filePath, String delimiter, String year, int month) {
         log.info("Lendo arquivos do Poder Executivo e criando estrutura de despesas. Ano = {}, Mês = {}", year, month);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.ISO_8859_1))) {
-            String firstLine = br.readLine();
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 String[] rawList = line.split(delimiter);
@@ -128,7 +128,7 @@ public class ExecutivoGeneratorService {
         String delimiter = ",";
         log.info("STF - Lendo arquivos de despesas e criando estrutura de despesa.");
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
-            String firstLine = br.readLine();
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 String[] rawList = line.split(delimiter);
@@ -175,7 +175,7 @@ public class ExecutivoGeneratorService {
             String delimiter = "\t";
             log.info("Justiça Federal - Lendo arquivos de despesas e criando estrutura de despesa. Mês = {}", month);
             try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
-                String firstLine = br.readLine();
+                br.readLine();
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] rawList = line.split(delimiter);

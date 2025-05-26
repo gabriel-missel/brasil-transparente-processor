@@ -71,7 +71,7 @@ public class EstadoGeneratorService {
     private void createStateExpanseStructure(String filePath, String delimiter, int month, String state) {
         log.info("{} - Lendo arquivos e criando estrutura de despesas. Mês = {}", state, month);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.ISO_8859_1))) {
-            String firstLine = br.readLine();
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 String[] rawList = line.split(delimiter);
