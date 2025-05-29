@@ -33,5 +33,6 @@ public final class UnidadesFederativasConstants {
 
     public static final Long UN_ID = 1L;
     public static final Long RS_ID = 2L;
+    public static final Long BA_ID = 3L;
 
 }

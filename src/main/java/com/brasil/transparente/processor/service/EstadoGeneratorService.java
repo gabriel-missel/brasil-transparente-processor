@@ -33,15 +33,16 @@ public class EstadoGeneratorService {
     private DespesaSimplificadaGeneratorService despesaSimplificadaGeneratorService;
     @Value("${CSV_PATH}")
     private String csvPath;
-    private final List<Poder> poderList = new ArrayList<>(Arrays.asList(
-            new Poder("Poder Executivo"),
-            new Poder("Poder Legislativo"),
-            new Poder("Poder Judiciário"),
-            new Poder("Órgãos Autônomos")
-    ));
 
-    public void generateStateExpenses(String year, String state) {
-        UnidadeFederativa unidadeFederativa = new UnidadeFederativa(UnidadesFederativasConstants.RS, 22L);
+    public void generateStateExpensesRS(String year, String state) {
+        log.info("Rio Grande do Sul - Iniciando");
+        UnidadeFederativa unidadeFederativa = new UnidadeFederativa(UnidadesFederativasConstants.RS);
+        List<Poder> poderList = new ArrayList<>(Arrays.asList(
+                new Poder("Poder Executivo"),
+                new Poder("Poder Legislativo"),
+                new Poder("Poder Judiciário"),
+                new Poder("Órgãos Autônomos")
+        ));
         int month = 1;
         while (month <= 12) {
             String yearString = String.valueOf(year);
@@ -50,7 +51,7 @@ public class EstadoGeneratorService {
             String relativePath = "/Estados/" + state + "/" + documentNumber + ".csv";
             String filePath = Paths.get(csvPath, relativePath).toString();
             String delimiter = ";";
-            createStateExpanseStructure(filePath, delimiter, month, state);
+            createStateExpanseStructureRS(filePath, delimiter, month, state, poderList);
             month++;
         }
 
@@ -68,10 +69,39 @@ public class EstadoGeneratorService {
         log.info("Rio Grande do Sul - Finalizado");
     }
 
-    private void createStateExpanseStructure(String filePath, String delimiter, int month, String state) {
+    public void generateStateExpensesBA(String year, String state) {
+        log.info("Bahia - Iniciando");
+        UnidadeFederativa unidadeFederativa = new UnidadeFederativa(UnidadesFederativasConstants.BA);
+        List<Poder> poderList = new ArrayList<>(Arrays.asList(
+                new Poder("Poder Executivo"),
+                new Poder("Poder Legislativo"),
+                new Poder("Poder Judiciário"),
+                new Poder("Órgãos Autônomos")
+        ));
+        String yearString = String.valueOf(year);
+        String relativePath = "/Estados/" + state + "/" + yearString + ".csv";
+        String filePath = Paths.get(csvPath, relativePath).toString();
+        String delimiter = ";";
+        createStateExpanseStructureBA(filePath, delimiter, state, poderList);
+
+        unidadeFederativa.setListPoder(poderList);
+        for (Poder poder : poderList) {
+            generalGeneratorService.aggregateAllPowerSpending(poder);
+            generalGeneratorService.setRelationships(unidadeFederativa);
+        }
+        double gastoTotalValue = generalGeneratorService.aggregateTotalExpense(unidadeFederativa);
+        generalGeneratorService.removeNegativeOrZeroExpenses(unidadeFederativa.getListPoder());
+        generalGeneratorService.setTotalPercentages(unidadeFederativa.getListPoder(), gastoTotalValue);
+        nameCorrector.refactorNames(unidadeFederativa.getListPoder());
+        generalGeneratorService.saveStructure(unidadeFederativa);
+        despesaSimplificadaGeneratorService.generateSimplifiedReportBA();
+        log.info("Bahia - Finalizado");
+    }
+
+    private void createStateExpanseStructureRS(String filePath, String delimiter, int month, String state, List<Poder> poderList) {
         log.info("{} - Lendo arquivos e criando estrutura de despesas. Mês = {}", state, month);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.ISO_8859_1))) {
-            br.readLine();
+            String firstLine = br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 String[] rawList = line.split(delimiter);
@@ -89,9 +119,7 @@ public class EstadoGeneratorService {
                 valorString = valorString.replace(",", ".");
                 double valor = Double.parseDouble(valorString);
 
-                if (Objects.equals(tipoGasto, Constants.LIQUIDACAO)
-                        || Objects.equals(tipoGasto, Constants.EMPENHO)
-                        || Objects.equals(tipoGasto, Constants.RETENCAO)
+                if (!Objects.equals(tipoGasto, Constants.PAGAMENTO)
                         || Objects.equals(valor, Constants.ZERO_DOUBLE)) {
                     continue;
                 }
@@ -102,7 +130,7 @@ public class EstadoGeneratorService {
                     ministerio = ministerioRevisado;
                 }
 
-                Poder poder = definePoder(poderString);
+                Poder poder = definePoder(poderString, poderList);
                 Ministerio ministerioReceived = generalGeneratorService.findOrCreateMinisterio(ministerio, poder);
                 Orgao orgaoReceived = generalGeneratorService.findOrCreateOrgao(orgao, ministerioReceived);
                 UnidadeGestora unidadeGestoraReceived = generalGeneratorService.findOrCreateUnidadeGestora(unidadeGestora, orgaoReceived);
@@ -117,19 +145,66 @@ public class EstadoGeneratorService {
         }
     }
 
-    private Poder definePoder(String poder) {
-        return switch (poder) {
-            case Constants.EXECUTIVO -> poderList.getFirst();
-            case Constants.LEGISLATIVO -> poderList.get(1);
-            case Constants.JUDICIARIO -> poderList.get(2);
-            case null, default -> poderList.get(3);
-        };
+    private void createStateExpanseStructureBA(String filePath, String delimiter, String state, List<Poder> poderList) {
+        log.info("{} - Lendo arquivos e criando estrutura de despesas.", state);
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
+            String firstLine = br.readLine();
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] rawList = line.split(delimiter);
+                List<String> refinedList = new ArrayList<>();
+                for (String column : rawList) {
+                    refinedList.add(column.replace("\"", "").trim());
+                }
+
+                String poderString = refinedList.get(5);
+                String ministerio = refinedList.get(7);
+                String orgao = refinedList.get(11);
+                String unidadeGestora = refinedList.get(12);
+                String elementoDespesa = refinedList.get(40);
+                String valorString = refinedList.get(59);
+                valorString = valorString.replace(",", ".");
+                double valor = Double.parseDouble(valorString);
+
+                if (Objects.equals(valor, Constants.ZERO_DOUBLE)) {
+                    continue;
+                }
+
+                Poder poder = definePoder(poderString, poderList);
+                Ministerio ministerioReceived = generalGeneratorService.findOrCreateMinisterio(ministerio, poder);
+                Orgao orgaoReceived = generalGeneratorService.findOrCreateOrgao(orgao, ministerioReceived);
+                UnidadeGestora unidadeGestoraReceived = generalGeneratorService.findOrCreateUnidadeGestora(unidadeGestora, orgaoReceived);
+                ElementoDespesa elementoDespesaReceived = generalGeneratorService.findOrCreateNewElementoDespesa(elementoDespesa, unidadeGestoraReceived);
+
+                generalGeneratorService.updateTotalValueSpent(ministerioReceived, orgaoReceived, unidadeGestoraReceived, elementoDespesaReceived, valor);
+            }
+        } catch (IOException e) {
+            generalGeneratorService.logExceptionMainFile(e);
+        } catch (NumberFormatException e) {
+            generalGeneratorService.logNumberFormatException(e);
+        }
+    }
+
+    private Poder definePoder(String poder, List<Poder> poderList) {
+        if (poder == null) {
+            return poderList.get(3);
+        }
+        String input = poder.trim().toUpperCase();
+        if (Constants.EXECUTIVO.stream().anyMatch(v -> input.equalsIgnoreCase(v.trim().toUpperCase()))) {
+            return poderList.getFirst();
+        } else if (Constants.LEGISLATIVO.stream().anyMatch(v -> input.equalsIgnoreCase(v.trim().toUpperCase()))) {
+            return poderList.get(1);
+        } else if (Constants.JUDICIARIO.stream().anyMatch(v -> input.equalsIgnoreCase(v.trim().toUpperCase()))) {
+            return poderList.get(2);
+        }
+        return poderList.get(3);
     }
 
     private String resolveMinisterio(String ministerio) {
         return switch (ministerio) {
             case RSConstants.INSTITUTO_RIOGRANDENSE_ARROZ -> RSConstants.SECRETARIA_AGRICULTURA;
-            case RSConstants.UERGS, RSConstants.FUNDACAO_ESCOLA_LIBERATO, RSConstants.CONSELHO_EDUCACAO -> RSConstants.SECRETARIA_EDUCACAO;
+            case RSConstants.UERGS, RSConstants.FUNDACAO_ESCOLA_LIBERATO, RSConstants.CONSELHO_EDUCACAO ->
+                    RSConstants.SECRETARIA_EDUCACAO;
             case RSConstants.FUNDACAO_AMPARO_PESQUISA -> RSConstants.SECRETARIA_INOVACAO;
             case RSConstants.FUNDACAO_PROTECAO_AMBIENTAL_ROESSLER -> RSConstants.SECRETARIA_MEIO_AMBIENTE;
             case RSConstants.ESCRITORIO_DESENVOLVIMENTO_PROJETOS,
@@ -142,8 +217,8 @@ public class EstadoGeneratorService {
             case RSConstants.DEPARTAMENTO_ESTRADAS_RODAGEM -> RSConstants.SECRETARIA_LOGISTICA_TRANSPORTES;
             case RSConstants.JUNTA_COMERCIAL -> RSConstants.SECRETARIA_DESENVOLVIMENTO_ECONOMICO;
             case RSConstants.AGENCIA_DELEGADOS -> RSConstants.SECRETARIA_PARCERIAS_CONCESSOES;
-            case RSConstants.INSTITUTO_PREVIDENCIA, RSConstants.INSTITUTO_ASSISTENCIA_SAUDE_SERVIDORES, RSConstants.ENCARGOS_FINANCEIROS ->
-                    RSConstants.SECRETARIA_FAZENDA;
+            case RSConstants.INSTITUTO_PREVIDENCIA, RSConstants.INSTITUTO_ASSISTENCIA_SAUDE_SERVIDORES,
+                 RSConstants.ENCARGOS_FINANCEIROS -> RSConstants.SECRETARIA_FAZENDA;
             default -> ministerio;
         };
     }

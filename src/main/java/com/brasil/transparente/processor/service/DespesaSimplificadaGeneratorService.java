@@ -53,6 +53,19 @@ public class DespesaSimplificadaGeneratorService {
         calculateAndSaveRSOutros();
     }
 
+    public void generateSimplifiedReportBA() {
+        log.info("Gerando estrutura simplificada - BA");
+        allMoneySpent = unidadeFederativaRepository.findById("3").get().getTotalValueSpent();
+        calculateAndSaveBA1();
+        calculateAndSaveBA2();
+        calculateAndSaveBA3();
+        calculateAndSaveBA4();
+        calculateAndSaveBA5();
+        calculateAndSaveBA6();
+        calculateAndSaveBA7();
+        calculateAndSaveBAOutros();
+    }
+
     private void calculateAndSaveUniao1() {
         double totalValueSpent = elementoDespesaRepository.findByElementoDespesaNameListOrNameOrgaoAndUnidadeFederativa
                 (SimplifiedConstants.DESPESAS_APOSENTADORIAS,
@@ -71,7 +84,7 @@ public class DespesaSimplificadaGeneratorService {
     private void calculateAndSaveUniao2() {
         double totalValueSpent = elementoDespesaRepository.findByMinisterioAndElementoDespesaElementoDespesaNameListAndUnidadeFederativa(
                 SimplifiedConstants.MINISTERIO_FAZENDA,
-                SimplifiedConstants.DESPESAS_JUROS_DIVIDA_PUBLICA,
+                SimplifiedConstants.DESPESAS_DIVIDA_PUBLICA,
                 UnidadesFederativasConstants.UN_ID);
         double percentageOfTotal = getPercentageOfTotal(totalValueSpent);
         DespesaSimplificada despesaSimplificada = new DespesaSimplificada(
@@ -204,7 +217,7 @@ public class DespesaSimplificadaGeneratorService {
     }
 
     private void calculateAndSaveRS1() {
-        double totalValueSpent = elementoDespesaRepository.findDespesasPrevidenciaByEstado(
+        double totalValueSpent = elementoDespesaRepository.findDespesasPrevidenciaRS(
                 UnidadesFederativasConstants.RS_ID,
                 SimplifiedConstants.TERMO_APOSENTADORIA1,
                 SimplifiedConstants.TERMO_APOSENTADORIA2,
@@ -224,7 +237,7 @@ public class DespesaSimplificadaGeneratorService {
     private void calculateAndSaveRS2() {
         double totalValueSpent = elementoDespesaRepository.findDespesasSegurancaByEstado(
                 UnidadesFederativasConstants.RS_ID,
-                SimplifiedConstants.SECRETARIA_SEGURANCA_RS,
+                SimplifiedConstants.SECRETARIA_SEGURANCA,
                 SimplifiedConstants.SECRETARIA_PENAL_SOCIOEDUCATIVO_RS
         );
         double percentageOfTotal = getPercentageOfTotal(totalValueSpent);
@@ -240,7 +253,7 @@ public class DespesaSimplificadaGeneratorService {
     private void calculateAndSaveRS3() {
         double totalValueSpent = elementoDespesaRepository.findDespesasSaudeByEstado(
                 UnidadesFederativasConstants.RS_ID,
-                SimplifiedConstants.SECRETARIA_SAUDE_RS
+                SimplifiedConstants.SECRETARIA_SAUDE
         );
         double percentageOfTotal = getPercentageOfTotal(totalValueSpent);
         DespesaSimplificada despesaSimplificada = new DespesaSimplificada(
@@ -255,7 +268,7 @@ public class DespesaSimplificadaGeneratorService {
     private void calculateAndSaveRS4() {
         double totalValueSpent = elementoDespesaRepository.findDespesasEducacaoByEstado(
                 UnidadesFederativasConstants.RS_ID,
-                SimplifiedConstants.SECRETARIA_EDUCACAO_RS
+                SimplifiedConstants.SECRETARIA_EDUCACAO
         );
         double percentageOfTotal = getPercentageOfTotal(totalValueSpent);
         DespesaSimplificada despesaSimplificada = new DespesaSimplificada(
@@ -294,6 +307,133 @@ public class DespesaSimplificadaGeneratorService {
                 sobragastos,
                 percentageOfTotal,
                 UnidadesFederativasConstants.RS_ID
+        );
+        despesaSimplificadaRepository.save(despesaSimplificada);
+    }
+
+    private void calculateAndSaveBA1() {
+        double totalValueSpent = elementoDespesaRepository.findDespesasPrevidenciaBA(
+                UnidadesFederativasConstants.BA_ID,
+                SimplifiedConstants.TERMO_APOSENTADORIA1,
+                SimplifiedConstants.TERMO_APOSENTADORIA2,
+                SimplifiedConstants.TERMO_APOSENTADORIA3,
+                SimplifiedConstants.FUNDO_PREVIDENCIA_BAHIA_1,
+                SimplifiedConstants.FUNDO_PREVIDENCIA_BAHIA_2
+        );
+        double percentageOfTotal = getPercentageOfTotal(totalValueSpent);
+        DespesaSimplificada despesaSimplificada = new DespesaSimplificada(
+                SimplifiedConstants.APOSENTADORIAS_PENSOES,
+                totalValueSpent,
+                percentageOfTotal,
+                UnidadesFederativasConstants.BA_ID
+        );
+        despesaSimplificadaRepository.save(despesaSimplificada);
+    }
+
+    private void calculateAndSaveBA2() {
+        double totalValueSpent = elementoDespesaRepository.findDespesasEducacaoByEstado(
+                UnidadesFederativasConstants.BA_ID,
+                SimplifiedConstants.SECRETARIA_EDUCACAO
+        );
+        double percentageOfTotal = getPercentageOfTotal(totalValueSpent);
+        DespesaSimplificada despesaSimplificada = new DespesaSimplificada(
+                SimplifiedConstants.EDUCACAO,
+                totalValueSpent,
+                percentageOfTotal,
+                UnidadesFederativasConstants.BA_ID
+        );
+        despesaSimplificadaRepository.save(despesaSimplificada);
+    }
+
+    private void calculateAndSaveBA3() {
+        double totalValueSpent = elementoDespesaRepository.findDespesasSaudeByEstado(
+                UnidadesFederativasConstants.BA_ID,
+                SimplifiedConstants.SECRETARIA_SAUDE
+        );
+        double percentageOfTotal = getPercentageOfTotal(totalValueSpent);
+        DespesaSimplificada despesaSimplificada = new DespesaSimplificada(
+                SimplifiedConstants.SAUDE,
+                totalValueSpent,
+                percentageOfTotal,
+                UnidadesFederativasConstants.BA_ID
+        );
+        despesaSimplificadaRepository.save(despesaSimplificada);
+    }
+
+    private void calculateAndSaveBA4() {
+        double totalValueSpent = elementoDespesaRepository.findDespesasSegurancaByEstado(
+                UnidadesFederativasConstants.RS_ID,
+                SimplifiedConstants.SECRETARIA_SEGURANCA,
+                SimplifiedConstants.SECRETARIA_PENAL_SOCIOEDUCATIVO_BA
+        );
+        double percentageOfTotal = getPercentageOfTotal(totalValueSpent);
+        DespesaSimplificada despesaSimplificada = new DespesaSimplificada(
+                SimplifiedConstants.SEGURANCA,
+                totalValueSpent,
+                percentageOfTotal,
+                UnidadesFederativasConstants.BA_ID
+        );
+        despesaSimplificadaRepository.save(despesaSimplificada);
+    }
+
+    private void calculateAndSaveBA5() {
+        double totalValueSpent = elementoDespesaRepository.findDespesasJudiciarioByEstado(
+                UnidadesFederativasConstants.BA_ID,
+                SimplifiedConstants.PODER_JUDICIARIO,
+                SimplifiedConstants.TERMO_APOSENTADORIA1,
+                SimplifiedConstants.TERMO_APOSENTADORIA2,
+                SimplifiedConstants.TERMO_APOSENTADORIA3
+        );
+        double percentageOfTotal = getPercentageOfTotal(totalValueSpent);
+        DespesaSimplificada despesaSimplificada = new DespesaSimplificada(
+                SimplifiedConstants.PODER_JUDICIARIO_ESTADUAL,
+                totalValueSpent,
+                percentageOfTotal,
+                UnidadesFederativasConstants.BA_ID
+        );
+        despesaSimplificadaRepository.save(despesaSimplificada);
+    }
+
+    private void calculateAndSaveBA6() {
+        double totalValueSpent = elementoDespesaRepository.findDespesasDividaByEstado(
+                UnidadesFederativasConstants.BA_ID,
+                SimplifiedConstants.ENCARGOS_GERAIS,
+                SimplifiedConstants.DESPESAS_DIVIDA_PUBLICA
+        );
+        double percentageOfTotal = getPercentageOfTotal(totalValueSpent);
+        DespesaSimplificada despesaSimplificada = new DespesaSimplificada(
+                SimplifiedConstants.DIVIDA_PUBLICA,
+                totalValueSpent,
+                percentageOfTotal,
+                UnidadesFederativasConstants.BA_ID
+        );
+        despesaSimplificadaRepository.save(despesaSimplificada);
+    }
+
+    private void calculateAndSaveBA7() {
+        double totalValueSpent = elementoDespesaRepository.findDespesasInfraestruturaByEstado(
+                UnidadesFederativasConstants.BA_ID,
+                SimplifiedConstants.SECRETARIAS_INFRAESTRUTURA
+        );
+        double percentageOfTotal = getPercentageOfTotal(totalValueSpent);
+        DespesaSimplificada despesaSimplificada = new DespesaSimplificada(
+                SimplifiedConstants.INFRAESTRUTURA,
+                totalValueSpent,
+                percentageOfTotal,
+                UnidadesFederativasConstants.BA_ID
+        );
+        despesaSimplificadaRepository.save(despesaSimplificada);
+    }
+
+    private void calculateAndSaveBAOutros() {
+        double gastosSimplificado = despesaSimplificadaRepository.sumTotalValueByUnidadeFederativa(UnidadesFederativasConstants.BA_ID);
+        double sobragastos = allMoneySpent - gastosSimplificado;
+        double percentageOfTotal = getPercentageOfTotal(sobragastos);
+        DespesaSimplificada despesaSimplificada = new DespesaSimplificada(
+                SimplifiedConstants.OUTROS,
+                sobragastos,
+                percentageOfTotal,
+                UnidadesFederativasConstants.BA_ID
         );
         despesaSimplificadaRepository.save(despesaSimplificada);
     }

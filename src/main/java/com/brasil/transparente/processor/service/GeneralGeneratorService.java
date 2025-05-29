@@ -22,13 +22,13 @@ public class GeneralGeneratorService {
     @Autowired
     private UnidadeFederativaRepository unidadeFederativaRepository;
 
-    public Ministerio findOrCreateMinisterio(String nameMinisterioLine, Poder poder) {
+    public Ministerio findOrCreateMinisterio(String nameMinisterio, Poder poder) {
         for (Ministerio ministerio : poder.getListMinisterio()) {
-            if (Objects.equals(nameMinisterioLine, ministerio.getNameMinisterio())) {
+            if (Objects.equals(nameMinisterio, ministerio.getNameMinisterio())) {
                 return ministerio;
             }
         }
-        return createMinisterio(nameMinisterioLine, poder);
+        return createMinisterio(nameMinisterio, poder);
     }
 
     private Ministerio createMinisterio(String nameMinisterioLine, Poder poder) {
