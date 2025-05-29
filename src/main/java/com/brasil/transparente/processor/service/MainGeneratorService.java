@@ -35,7 +35,7 @@ public class MainGeneratorService {
     List<Poder> poderList = new ArrayList<>();
 
     public void generateCompleteReportService(String year) {
-        UnidadeFederativa unidadeFederativa = new UnidadeFederativa(UNIAO_FEDERAL, 1L);
+        UnidadeFederativa unidadeFederativa = new UnidadeFederativa(UNIAO_FEDERAL);
         poderList.add(executivoGeneratorService.generateExecutiveBranch(year));
         poderList.add(judiciarioGeneratorService.generateJudiciaryBranch(year));
         poderList.add(legislativoGeneratorService.generateLegislativeBranch());
@@ -49,7 +49,8 @@ public class MainGeneratorService {
         generalGeneratorService.saveStructure(unidadeFederativa);
         despesaSimplificadaGeneratorService.generateSimplifiedReportUniao();
         log.info("Finalizado - União");
-        estadoGeneratorService.generateStateExpenses(year, "RS");
+        estadoGeneratorService.generateStateExpensesRS(year, "RS");
+        estadoGeneratorService.generateStateExpensesBA(year, "BA");
         log.info("Finalizado - Estados");
         log.info("[FINALIZADO]");
     }

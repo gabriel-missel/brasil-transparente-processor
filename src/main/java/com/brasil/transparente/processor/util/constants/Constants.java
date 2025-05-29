@@ -2,6 +2,8 @@ package com.brasil.transparente.processor.util.constants;
 
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public final class Constants {
 
@@ -10,11 +12,9 @@ public final class Constants {
     public static final String SEM_INFORMACAO = "Sem informação";
     public static final String REPASSES = "Distribuição Constitucional ou Legal de Rec";
     public static final String AMORTIZACAO_DIVIDA = "Amortização/Refinanciamento da Dívida";
-    public static final String LIQUIDACAO = "Liquidação";
-    public static final String EMPENHO = "Empenho";
-    public static final String RETENCAO = "Retenção";
-    public static final String EXECUTIVO = "PODER EXECUTIVO";
-    public static final String LEGISLATIVO = "PODER LEGISLATIVO";
-    public static final String JUDICIARIO = "PODER JUDICIARIO";
+    public static final String PAGAMENTO = "Pagamento";
+    public static final List<String> EXECUTIVO = List.of("PODER EXECUTIVO", "Executivo");
+    public static final List<String> LEGISLATIVO = List.of("PODER LEGISLATIVO", "Legislativo");
+    public static final List<String> JUDICIARIO = List.of("PODER JUDICIARIO", "Judiciário");
 
 }

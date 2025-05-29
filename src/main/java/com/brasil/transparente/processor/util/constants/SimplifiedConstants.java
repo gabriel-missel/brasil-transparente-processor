@@ -42,12 +42,13 @@ public class SimplifiedConstants {
     public static final String FRGPS = "Fundo do Regime Geral da Previdência Social";
     public static final String APOSENTADORIAS_PENSOES = "Aposentadorias e Pensões";
     public static final String MINISTERIO_FAZENDA = "Ministério da Fazenda";
-    public static final List<String> DESPESAS_JUROS_DIVIDA_PUBLICA = List.of(
+    public static final List<String> DESPESAS_DIVIDA_PUBLICA = List.of(
             "Juros, Deságios e Descontos da Dívida Mobiliária",
             "Juros sobre a Dívida por Contrato",
             "Outros Encargos sobre a Dívida Mobiliária",
             "Outros Encargos sobre a Dívida por Contrato",
-            "Obrigações decorrentes de Política Monetária"
+            "Obrigações decorrentes de Política Monetária",
+            "Principal da Dívida Contratual Resgatado"
     );
     public static final String JUROS_DIVIDA_PUBLICA = "Juros da Dívida Pública";
     public static final String MINISTERIO_EDUCACAO = "Ministério da Educação";
@@ -72,9 +73,20 @@ public class SimplifiedConstants {
     public static final String TERMO_APOSENTADORIA2 = "pens";
     public static final String TERMO_APOSENTADORIA3 = "previd";
     public static final String INSTITUTO_PREVIDENCIA_RS = "Instituto de Previdência do Estado do Rio Grande do Sul";
-    public static final String SECRETARIA_SEGURANCA_RS = "Secretaria da Segurança Pública";
+    public static final String SECRETARIA_SEGURANCA = "Secretaria da Segurança Pública";
     public static final String SECRETARIA_PENAL_SOCIOEDUCATIVO_RS = "Secretaria de Sistemas Penal e Socioeducativo";
-    public static final String SECRETARIA_SAUDE_RS = "Secretaria da Saúde";
-    public static final String SECRETARIA_EDUCACAO_RS = "Secretaria da Educação";
+    public static final String SECRETARIA_SAUDE = "Secretaria da Saúde";
+    public static final String SECRETARIA_EDUCACAO = "Secretaria da Educação";
     public static final String SEGURANCA = "Segurança";
+    public static final String FUNDO_PREVIDENCIA_BAHIA_1 = "Fundo Financeiro da Previdência Social dos Servidores Públicos do Estado da Bahia";
+    public static final String FUNDO_PREVIDENCIA_BAHIA_2 = "Fundo de Proteção Social dos Policiais Militares e dos Bombeiros Militares do Estado da Bahia";
+    public static final String SECRETARIA_PENAL_SOCIOEDUCATIVO_BA = "Secretaria de Administração Penitenciária e Ressocialização";
+    public static final String DIVIDA_PUBLICA = "Dívida Pública";
+    public static final String ENCARGOS_GERAIS = "Encargos Gerais do Estado";
+    public static final String INFRAESTRUTURA = "Infraestrutura";
+    public static final List<String> SECRETARIAS_INFRAESTRUTURA = List.of(
+            "Secretaria de Infraestrutura",
+            "Secretaria de Desenvolvimento Urbano",
+            "Secretaria de Infraestrutura Hídrica e Saneamento"
+    );
 }

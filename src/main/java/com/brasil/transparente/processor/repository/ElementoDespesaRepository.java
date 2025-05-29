@@ -129,12 +129,35 @@ public interface ElementoDespesaRepository extends JpaRepository<ElementoDespesa
             "OR LOWER(ed.nameElementoDespesa) LIKE %:term3% " +
             "OR org.nameOrgao = :nameOrgao" +
             ")")
-    double findDespesasPrevidenciaByEstado(
+    double findDespesasPrevidenciaRS(
             @Param("unidadeFederativaId") Long unidadeFederativaId,
             @Param("term1") String term1,
             @Param("term2") String term2,
             @Param("term3") String term3,
             @Param("nameOrgao") String nameOrgao
+    );
+
+    @Query("SELECT SUM(ed.totalValueSpent) FROM ElementoDespesa ed " +
+            "JOIN ed.unidadeGestora ug " +
+            "JOIN ug.orgao org " +
+            "JOIN org.ministerio min " +
+            "JOIN min.poder pod " +
+            "JOIN pod.unidadeFederativa uf " +
+            "WHERE uf.unidadeFederativaId = :unidadeFederativaId " +
+            "AND (" +
+            "LOWER(ed.nameElementoDespesa) LIKE %:term1% " +
+            "OR LOWER(ed.nameElementoDespesa) LIKE %:term2% " +
+            "OR LOWER(ed.nameElementoDespesa) LIKE %:term3% " +
+            "OR org.nameOrgao = :nameOrgao1 " +
+            "OR org.nameOrgao = :nameOrgao2 " +
+            ")")
+    double findDespesasPrevidenciaBA(
+            @Param("unidadeFederativaId") Long unidadeFederativaId,
+            @Param("term1") String term1,
+            @Param("term2") String term2,
+            @Param("term3") String term3,
+            @Param("nameOrgao1") String nameOrgao1,
+            @Param("nameOrgao2") String nameOrgao2
     );
 
     @Query("SELECT SUM(ed.totalValueSpent) FROM ElementoDespesa ed " +
@@ -194,6 +217,34 @@ public interface ElementoDespesaRepository extends JpaRepository<ElementoDespesa
             @Param("term1") String term1,
             @Param("term2") String term2,
             @Param("term3") String term3
+    );
+
+    @Query("SELECT SUM(ed.totalValueSpent) FROM ElementoDespesa ed " +
+            "JOIN ed.unidadeGestora ug " +
+            "JOIN ug.orgao org " +
+            "JOIN org.ministerio min " +
+            "JOIN min.poder pod " +
+            "JOIN pod.unidadeFederativa uf " +
+            "WHERE uf.unidadeFederativaId = :unidadeFederativaId " +
+            "AND min.nameMinisterio = :nameMinisterio " +
+            "AND ed.nameElementoDespesa IN :elementoDespesaNameList ")
+    double findDespesasDividaByEstado(
+            @Param("unidadeFederativaId") Long unidadeFederativaId,
+            @Param("nameMinisterio") String En,
+            @Param("elementoDespesaNameList") List<String> elementoDespesaNameList
+    );
+
+    @Query("SELECT SUM(ed.totalValueSpent) FROM ElementoDespesa ed " +
+            "JOIN ed.unidadeGestora ug " +
+            "JOIN ug.orgao org " +
+            "JOIN org.ministerio min " +
+            "JOIN min.poder pod " +
+            "JOIN pod.unidadeFederativa uf " +
+            "WHERE uf.unidadeFederativaId = :unidadeFederativaId " +
+            "AND min.nameMinisterio IN :ministerioNameList ")
+    double findDespesasInfraestruturaByEstado(
+            @Param("unidadeFederativaId") Long unidadeFederativaId,
+            @Param("ministerioNameList") List<String> ministerioNameList
     );
 
 }
